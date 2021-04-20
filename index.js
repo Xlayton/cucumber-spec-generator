@@ -3,9 +3,8 @@ const { readdir, lstat, readFileSync, writeFileSync, mkdirSync, existsSync } = r
 const PromptSync = require("prompt-sync")();
 
 let allMethodRegex = /^(?<given>Given)|(?<when>When)|(?<then>Then)|(?<and>And)|(?<but>But)/g;
-let everythingAfterDotRegex = /(?<=[\w-])\..*$/;
-let everythingAfterSlashRegex = /\/[\w-]+\.\w+/;
-let fileNameRegex = /(?<=\/)\w+(?=\.\w+)/;
+let everythingAfterSlashRegex = /[\/\\][\w-]+\.\w+/;
+let fileNameRegex = /(?<=[\/\\])\w+(?=\.\w+)/;
 let isFeatureFile = false;
 const path = process.argv[2];
 
