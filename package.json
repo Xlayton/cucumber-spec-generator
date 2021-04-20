@@ -1,6 +1,6 @@
 {
   "name": "cucumber-spec-generator",
-  "version": "0.0.3",
+  "version": "0.1.1",
   "description": "A script, designed to run with npx, to generate cucumber test spec using a feature file as reference.",
   "main": "index.js",
   "bin": {
