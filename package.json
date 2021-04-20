@@ -4,7 +4,7 @@
   "description": "A script, designed to run with npx, to generate cucumber test spec using a feature file as reference.",
   "main": "index.js",
   "bin": {
-    "cucumber-test-generator": "index.js"
+    "cucumber-spec-generator": "index.js"
   },
   "keywords": [
     "cucumber",
