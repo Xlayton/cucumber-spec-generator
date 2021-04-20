@@ -1,6 +1,6 @@
 {
   "name": "cucumber-spec-generator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A script, designed to run with npx, to generate cucumber test spec using a feature file as reference.",
   "main": "index.js",
   "bin": {
@@ -14,6 +14,11 @@
   ],
   "author": "Clayton Schrumpf",
   "license": "ISC",
+  "homepage": "https://github.com/Xlayton/cucumber-spec-generator#readme",
+  "bugs": {
+    "url": "https://github.com/Xlayton/cucumber-spec-generator/issues",
+    "email": "claytonschrumpf@gmail.com"
+  },
   "access": "public",
   "dependencies": {
     "prompt-sync": "^4.2.0"
