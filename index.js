@@ -72,8 +72,8 @@ lstat(path, (err, fileStats) => {
       files.forEach((file) => {
           if(file.endsWith(".feature")) {
               isFeatureFile = true;
-              let specsToWrite = readFeature(file).toString().split("\n").map(val => val.trim()).filter(val => allMethodRegex.test(val));
-              writeSpec(file.replace(everythingAfterDotRegex, ""), specsToWrite, `${path}`);
+              let specsToWrite = readFeature(file).toString().split("\n").map(val => val.trim()).filter(val => allMethodRegex.test(val) || val.startsWith("Then"));
+              writeSpec(file.match(fileNameRegex)[0], specsToWrite, `${path}`);
           }
       });
       if(!isFeatureFile) {
@@ -82,8 +82,8 @@ lstat(path, (err, fileStats) => {
     });
   } else {
       if(path.endsWith(".feature")) {
-          let specsToWrite = readFeature(path).toString().split("\n").map(val => val.trim()).filter(val => allMethodRegex.test(val));
-          writeSpec(path.replace(everythingAfterDotRegex, ""), specsToWrite, path.replace(everythingAfterSlashRegex, ""));
+          let specsToWrite = readFeature(path).toString().split("\n").map(val => val.trim()).filter(val => allMethodRegex.test(val) || val.startsWith("Then"));
+          writeSpec(path.match(fileNameRegex)[0], specsToWrite, path.replace(everythingAfterSlashRegex, ""));
       } else {
           throw new Error("Path is a file, but not a feature file");
       }
