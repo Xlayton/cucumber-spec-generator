@@ -2,9 +2,10 @@
 const { readdir, lstat, readFileSync, writeFileSync, mkdirSync, existsSync } = require("fs");
 const PromptSync = require("prompt-sync")();
 
-let allMethodRegex = /^(?<given>Given)|(?<when>When)|(?<then>Then)|(?<and>And)|(?<but>But)/g
-let everythingAfterDotRegex = /(?<=[\w-])\..*$/
+let allMethodRegex = /^(?<given>Given)|(?<when>When)|(?<then>Then)|(?<and>And)|(?<but>But)/g;
+let everythingAfterDotRegex = /(?<=[\w-])\..*$/;
 let everythingAfterSlashRegex = /\/[\w-]+\.\w+/;
+let fileNameRegex = /(?<=\/)\w+(?=\.\w+)/;
 let isFeatureFile = false;
 const path = process.argv[2];
 
@@ -73,7 +74,7 @@ lstat(path, (err, fileStats) => {
           if(file.endsWith(".feature")) {
               isFeatureFile = true;
               let specsToWrite = readFeature(file).toString().split("\n").map(val => val.trim()).filter(val => allMethodRegex.test(val));
-              writeSpec(file.replace(everythingAfterDotRegex, ""), specsToWrite, `${path}`);
+              writeSpec(file.match(fileNameRegex)[0], specsToWrite, `${path}`);
           }
       });
       if(!isFeatureFile) {
@@ -83,7 +84,7 @@ lstat(path, (err, fileStats) => {
   } else {
       if(path.endsWith(".feature")) {
           let specsToWrite = readFeature(path).toString().split("\n").map(val => val.trim()).filter(val => allMethodRegex.test(val));
-          writeSpec(path.replace(everythingAfterDotRegex, ""), specsToWrite, path.replace(everythingAfterSlashRegex, ""));
+          writeSpec(path.match(fileNameRegex)[0], specsToWrite, path.replace(everythingAfterSlashRegex, ""));
       } else {
           throw new Error("Path is a file, but not a feature file");
       }
