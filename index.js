@@ -2,9 +2,9 @@
 const { readdir, lstat, readFileSync, writeFileSync, mkdirSync, existsSync } = require("fs");
 const PromptSync = require("prompt-sync")();
 
-let allMethodRegex = /^(?<given>Given)|(?<when>When)|(?<then>Then)|(?<and>And)|(?<but>But)/g
-let everythingAfterDotRegex = /(?<=[\w-])\..*$/
-let everythingAfterSlashRegex = /\/[\w-]+\.\w+/;
+let allMethodRegex = /^(?<given>Given)|(?<when>When)|(?<then>Then)|(?<and>And)|(?<but>But)/g;
+let everythingAfterSlashRegex = /[\/\\][\w-]+\.\w+/;
+let fileNameRegex = /(?<=[\/\\])\w+(?=\.\w+)/;
 let isFeatureFile = false;
 const path = process.argv[2];
 
