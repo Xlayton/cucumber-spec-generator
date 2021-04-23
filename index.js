@@ -2,7 +2,8 @@
 const { readdir, lstat, readFileSync, writeFileSync, mkdirSync, existsSync } = require("fs");
 const PromptSync = require("prompt-sync")();
 
-let allMethodRegex = /^(?<given>Given)|(?<when>When)|(?<then>Then)|(?<and>And)|(?<but>But)/g;
+let allMethodRegex = /^Given|When|Then|And|But/;
+let allMethodGlobalRegex = /^Given|When|Then|And|But/g;
 let everythingAfterSlashRegex = /[\/\\][\w-]+\.\w+/;
 let fileNameRegex = /(?<=[\/\\])\w+(?=\.\w+)/;
 let isFeatureFile = false;
@@ -24,7 +25,7 @@ const writeSpec = (featureName, specsToWrite, dirPath) => {
         }
         return acc;
     });
-    let methodRegisters = specsToWrite.join("\n").match(allMethodRegex).reduce((acc, val) => {
+    let methodRegisters = specsToWrite.join("\n").match(allMethodGlobalRegex).reduce((acc, val) => {
         if(typeof acc === "string") {
             acc = [acc]
         }
@@ -72,7 +73,7 @@ lstat(path, (err, fileStats) => {
       files.forEach((file) => {
           if(file.endsWith(".feature")) {
               isFeatureFile = true;
-              let specsToWrite = readFeature(file).toString().split("\n").map(val => val.trim()).filter(val => allMethodRegex.test(val) || val.startsWith("Then"));
+              let specsToWrite = readFeature(file).toString().split("\n").map(val => val.trim()).filter(val => allMethodRegex.test(val));
               writeSpec(file.match(fileNameRegex)[0], specsToWrite, `${path}`);
           }
       });
@@ -82,7 +83,7 @@ lstat(path, (err, fileStats) => {
     });
   } else {
       if(path.endsWith(".feature")) {
-          let specsToWrite = readFeature(path).toString().split("\n").map(val => val.trim()).filter(val => allMethodRegex.test(val) || val.startsWith("Then"));
+          let specsToWrite = readFeature(path).toString().split("\n").map(val => val.trim()).filter(val => allMethodRegex.test(val));
           writeSpec(path.match(fileNameRegex)[0], specsToWrite, path.replace(everythingAfterSlashRegex, ""));
       } else {
           throw new Error("Path is a file, but not a feature file");
