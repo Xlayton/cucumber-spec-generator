@@ -34,7 +34,7 @@ const writeSpec = (featureName, specsToWrite, dirPath) => {
         }
         return acc;
     }).join(", ")
-    let writeString = `import { ${methodRegisters} } from "cypress-cucumber-preprocessor"\n`
+    let writeString = `import { ${methodRegisters} } from "cypress-cucumber-preprocessor/steps"\n`
     specsToWrite.forEach(spec => {
         let method = spec.match(allMethodRegex)[0];
         spec = spec.replace(allMethodRegex, "").trim();
